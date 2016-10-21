@@ -1,3 +1,13 @@
+
+# coding: utf-8
+
+# In[ ]:
+
+# %load movie_recommendations.py
+
+
+# In[ ]:
+
 #!/usr/bin/env python
 """
 movie_recommendations.py
@@ -11,6 +21,9 @@ blocks denoted by "YOUR CODE GOES HERE" -- you should not need to modify any
 other code!
 """
 
+
+# In[8]:
+
 import matplotlib.pyplot as plt
 import movie_data_helper
 import numpy as np
@@ -18,6 +31,8 @@ import scipy
 import scipy.misc
 from sys import exit
 
+
+# In[ ]:
 
 def compute_posterior(prior, likelihood, y):
     """
@@ -45,55 +60,94 @@ def compute_posterior(prior, likelihood, y):
         Y_0 = y_0, ..., Y_{N-1} = y_{n-1}
     """
 
-    # -------------------------------------------------------------------------
-    # ERROR CHECKS -- DO NOT MODIFY
-    #
 
-    # check that prior probabilities sum to 1
-    if np.abs(1 - np.sum(prior)) > 1e-06:
-        exit('In compute_posterior: The prior probabilities need to sum to 1')
+# In[13]:
 
-    # check that likelihood is specified as a 2D array
-    if len(likelihood.shape) != 2:
-        exit('In compute_posterior: The likelihood needs to be specified as ' +
-             'a 2D array')
+if(True): # testing driver
+    prior = np.array([0.6, 0.4])
+    print(prior)
+    likelihood = np.array([
+        [0.7, 0.98],
+        [0.3, 0.02],
+    ])
+    print(likelihood)
+    print(likelihood[0,1])
+    y = [0]*2 + [1]*1
+    print(y)
+    
 
-    K, M = likelihood.shape
 
-    # make sure likelihood and prior agree on number of hidden states
-    if len(prior) != M:
-        exit('In compute_posterior: Mismatch in number of hidden states ' +
-             'according to the prior and the likelihood.')
+# In[11]:
 
-    # make sure the conditional distribution given each hidden state value sums
-    # to 1
-    for m in range(M):
-        if np.abs(1 - np.sum(likelihood[:, m])) > 1e-06:
-            exit('In compute_posterior: P(Y | X = %d) does not sum to 1' % m)
+# -------------------------------------------------------------------------
+# ERROR CHECKS -- DO NOT MODIFY
+#
 
-    #
-    # END OF ERROR CHECKS
-    # -------------------------------------------------------------------------
+# check that prior probabilities sum to 1
+if np.abs(1 - np.sum(prior)) > 1e-06:
+    exit('In compute_posterior: The prior probabilities need to sum to 1')
 
-    # -------------------------------------------------------------------------
-    # YOUR CODE GOES HERE FOR PART (b)
-    #
-    # Place your code to compute the log of the posterior here: store it in a
-    # NumPy array called `log_answer`. If you exponentiate really small
-    # numbers, the result is likely to underflow (i.e., it will be so small
-    # that the computer will just make it 0 rather than storing the right
-    # value). You need to go to log-domain. Hint: this next line is a good
-    # first step.
-    log_prior = np.log(prior)
+# check that likelihood is specified as a 2D array
+if len(likelihood.shape) != 2:
+    exit('In compute_posterior: The likelihood needs to be specified as ' +
+         'a 2D array')
 
-    #
-    # END OF YOUR CODE FOR PART (b)
-    # -------------------------------------------------------------------------
+K, M = likelihood.shape
 
-    # do not exponentiate before this step
-    posterior = np.exp(log_answer)
-    return posterior
+# make sure likelihood and prior agree on number of hidden states
+if len(prior) != M:
+    exit('In compute_posterior: Mismatch in number of hidden states ' +
+         'according to the prior and the likelihood.')
 
+# make sure the conditional distribution given each hidden state value sums
+# to 1
+for m in range(M):
+    if np.abs(1 - np.sum(likelihood[:, m])) > 1e-06:
+        exit('In compute_posterior: P(Y | X = %d) does not sum to 1' % m)
+
+#
+# END OF ERROR CHECKS
+# -------------------------------------------------------------------------
+
+# -------------------------------------------------------------------------
+# YOUR CODE GOES HERE FOR PART (b)
+#
+# Place your code to compute the log of the posterior here: store it in a
+# NumPy array called `log_answer`. If you exponentiate really small
+# numbers, the result is likely to underflow (i.e., it will be so small
+# that the computer will just make it 0 rather than storing the right
+# value). You need to go to log-domain. Hint: this next line is a good
+# first step.
+log_prior = np.log(prior)
+
+#
+# END OF YOUR CODE FOR PART (b)
+# -------------------------------------------------------------------------
+
+# do not exponentiate before this step
+posterior = np.exp(log_answer)
+# to be removed
+print(posterior)
+
+
+# In[9]:
+
+from scipy.misc import logsumexp
+a = np.arange(10)
+a
+
+
+# In[10]:
+
+np.exp(a)
+
+
+# In[ ]:
+
+return posterior
+
+
+# In[ ]:
 
 def compute_movie_rating_likelihood(M):
     """
@@ -314,3 +368,9 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+# In[ ]:
+
+
+
